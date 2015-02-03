@@ -1,17 +1,32 @@
 <%-- 
     Document   : index
-    Created on : Feb 2, 2015, 3:57:21 PM
+    Created on : Feb 2, 2015, 4:56:54 PM
     Author     : aryner
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>JSP Page</title>
-	</head>
-	<body>
-		<h1>Hello World!</h1>
-	</body>
-</html>
+
+<h2>Log in</h2>
+
+<%
+	if(session.getAttribute("error") != null){
+		out.print("<p style='color:red;'>Incorrect password or user name");
+		session.removeAttribute("error");
+	}
+	if(session.getAttribute("user") != null) {
+		response.sendRedirect("/Cornea_Grader/home"); 
+	}
+%>
+
+<form action="login" method="POST">
+	<p>User name: 
+		<input type="text" name="userName">
+	</p>
+	<p>Password: 
+		<input type="password" name="password">
+	</p>
+	<p>
+		<input type="submit" value="Log in" class="btn">
+	</p>
+</form>
+
+<a href="register">Register</a>

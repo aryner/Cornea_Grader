@@ -1,5 +1,26 @@
 <%-- any content can be specified here e.g.: --%>
 <%@ page pageEncoding="UTF-8" %>
-<h2>Hello World!</h2>
-<%
-%>
+<%@ page import="Model.User" %>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<title>Cornea Grader</title>
+	</head>
+	<body>
+		<div id="header">
+			<div class='tinySpacer'></div>
+			<a class="title" href="home">Cornea Grader</a>
+			<span class="welcome">
+				<%
+					if(session.getAttribute("user") != null) {
+						out.print("Welcome " + ((User)session.getAttribute("user")).getName()+", id:"+((User)session.getAttribute("user")).getId());
+					}
+				%>
+			</span>
+			<form action="logout" method="POST">
+				<input type="submit" value="log out" class="logOutBtn logOut">
+			</form>
+		</div>
+		<div id="content">

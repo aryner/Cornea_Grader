@@ -18,7 +18,7 @@ import javax.servlet.annotation.*;
  *
  * @author aryner
  */
-@WebServlet(name="Controller", urlPatterns={ })
+@WebServlet(name="Controller", urlPatterns={"/Controller","/"})
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
@@ -34,6 +34,20 @@ public class Controller extends HttpServlet {
 		throws ServletException, IOException {
 		String userPath = request.getServletPath(); 
 		HttpSession session = request.getSession(); 
+
+		//The user is not logged in so is redirected to the index/login page
+		if(session.getAttribute("user") == null && !userPath.equals("/register")) {
+			response.sendRedirect("/Cornea_Grader/index.jsp");
+			return;
+		}
+
+		String url = "/WEB-INF/view" + userPath + ".jsp";
+
+		try {
+			request.getRequestDispatcher(url).forward(request, response);
+		} catch (IOException ex){
+			ex.printStackTrace(System.out);
+		}
 	}
 
 	/**
@@ -49,6 +63,14 @@ public class Controller extends HttpServlet {
 		throws ServletException, IOException {
 		String userPath = request.getServletPath(); 
 		HttpSession session = request.getSession(); 
+
+		String url = "/WEB-INF/view" + userPath + ".jsp";
+
+		try {
+			request.getRequestDispatcher(url).forward(request, response);
+		} catch (IOException ex){
+			ex.printStackTrace(System.out);
+		}
 	}
 
 	/**
