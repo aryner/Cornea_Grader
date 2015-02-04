@@ -38,17 +38,7 @@ public class SQLCommands {
 			resultSet = stmt.executeQuery(query); 
 
 			while(resultSet.next()) {
-				switch (modelType) {
-					case Model.USER:
-						result.add(User.getModel(resultSet));
-						break;
-					case Model.PICTURE:
-						result.add(Picture.getModel(resultSet));
-						break;
-					case Model.GRADE:
-						result.add(Grade.getModel(resultSet));
-						break;
-				}
+				result.add(Model.getModel(resultSet, modelType));
 			}
 		}
 		catch (javax.naming.NamingException e) {

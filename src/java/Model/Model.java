@@ -8,6 +8,7 @@ package Model;
 
 
 import java.sql.*;
+import javax.naming.NamingException;
 
 /**
  *
@@ -19,7 +20,21 @@ public abstract class Model {
 	public static final int GRADE = 3;
 	
 	public static Model getModel(ResultSet resultSet)
-		throws javax.naming.NamingException, SQLException {
+		throws NamingException, SQLException {
 		return null;
+	}
+
+	public static Model getModel(ResultSet resultSet, int modelType) 
+		throws NamingException, SQLException {
+		switch (modelType) {
+			case Model.USER:
+				return User.getModel(resultSet);
+			case Model.PICTURE:
+				return Picture.getModel(resultSet);
+			case Model.GRADE:
+				return Grade.getModel(resultSet);
+			default:
+				return null;
+		}
 	}
 }
