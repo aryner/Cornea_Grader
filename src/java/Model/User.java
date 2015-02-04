@@ -19,6 +19,10 @@ public class User extends Model {
 	private int access;
 	private String password;
 
+	private static final int GRADER = 1;
+	private static final int UPLOADER = 2;
+	private static final int GRADER_UPLOADER = 3;
+
 	public User(int id, String name, int access, String password) {
 		this.id = id;
 		this.name = name;
@@ -36,7 +40,7 @@ public class User extends Model {
 		String getQuery = "SELECT * FROM user WHERE name='"+name+"'";
 		ArrayList<Model> users = SQLCommands.queryModel(getQuery, Model.USER);
 
-		if(users.isEmpty()) return null;
+		if(!users.isEmpty()) return null;
 
 		String insertQuery = "INSERT INTO user (name, access, password) VALUES ("+
 			       "'"+name+"', '"+access+"', '"+password+"')";

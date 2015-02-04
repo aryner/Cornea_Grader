@@ -19,7 +19,7 @@ import Model.*;
  *
  * @author aryner
  */
-@WebServlet(name="Controller", urlPatterns={"/Controller","/register","/createUser"})
+@WebServlet(name="Controller", urlPatterns={"/Controller","/register","/createUser","/home","/logout"})
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
@@ -35,9 +35,10 @@ public class Controller extends HttpServlet {
 		throws ServletException, IOException {
 		String userPath = request.getServletPath(); 
 		HttpSession session = request.getSession(); 
+		User user = (User)session.getAttribute("user");
 
 		//The user is not logged in so is redirected to the index/login page
-		if(session.getAttribute("user") == null && !userPath.equals("/register")) {
+		if(user == null && !userPath.equals("/register")) {
 			response.sendRedirect("/Cornea_Grader/index.jsp");
 			return;
 		}
@@ -64,6 +65,7 @@ public class Controller extends HttpServlet {
 		throws ServletException, IOException {
 		String userPath = request.getServletPath(); 
 		HttpSession session = request.getSession(); 
+		User user;// = (User)session.getAttribute("user");
 
 		if(userPath.equals("/createUser")) {
 			String name = request.getParameter("userName");
@@ -72,7 +74,7 @@ public class Controller extends HttpServlet {
 			String type = request.getParameter("graderType");
 
 			if(password.equals(rePassword)){
-				User user = User.register(name, Integer.parseInt(type), password);
+				user = User.register(name, Integer.parseInt(type), password);
 
 				if(user == null) {
 					session.setAttribute("error", "That user name has been taken");

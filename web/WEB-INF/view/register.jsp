@@ -30,9 +30,9 @@
 	<p>
 		Select which type of grader you are:
 		<select name="graderType" class="btn bigBtn">
-			<option value="0">Grader</option>
-			<option value="1">Uploader</option>
-			<option value="2">Both</option>
+			<option value="1">Grader</option>
+			<option value="2">Uploader</option>
+			<option value="3">Both</option>
 		</select>
 	<p>
 		<input type="submit" value="submit" class="btn">
