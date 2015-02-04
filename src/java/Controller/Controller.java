@@ -18,7 +18,7 @@ import javax.servlet.annotation.*;
  *
  * @author aryner
  */
-@WebServlet(name="Controller", urlPatterns={"/Controller","/"})
+@WebServlet(name="Controller", urlPatterns={"/Controller","/register"})
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
