@@ -10,7 +10,7 @@ package Utilities;
  *
  * @author aryner
  */
-public class Tools {
+public class Constants {
 	public final String FILE_SEP = System.getProperty("file.separator");
 	public final String PORT = System.getProperty("os.name").contains("Windows") ? "8084" : "8080";
 }
