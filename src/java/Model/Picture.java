@@ -6,11 +6,12 @@
 
 package Model;
 
+
 /**
  *
  * @author aryner
  */
-public class Picture {
+public class Picture extends Model{
 	private int id;
 	private String name;
 	private int patient_number;
@@ -23,6 +24,27 @@ public class Picture {
 	public static final int CELLSCOPE = 1;
 	public static final int HDR = 1;
 	public static final int PLUS_ONE_EXPOSURE = 1;
+
+	public Picture( int id, String name, int patient_number, int dslr_cellscope,
+			int hdr, int plus_one_exposure, int right_left) {
+		this.id = id;
+		this.name = name;
+		this.patient_number = patient_number;
+		this.dslr_cellscope = dslr_cellscope;
+		this.hdr = hdr;
+		this.plus_one_exposure = plus_one_exposure;
+		this.right_left = right_left;
+	}
+
+	public static Picture getModel(java.sql.ResultSet resultSet) 
+		throws java.sql.SQLException, javax.naming.NamingException {
+		return new Picture(
+				resultSet.getInt("id"),resultSet.getString("name"),
+				resultSet.getInt("patient_number"),resultSet.getInt("DSLR_cellscope"),
+				resultSet.getInt("HDR"),resultSet.getInt("plus_one_exposure"),
+				resultSet.getInt("right_left")
+		);
+	}
 
 	/**
 	 * @return the id

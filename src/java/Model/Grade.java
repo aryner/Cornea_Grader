@@ -6,11 +6,12 @@
 
 package Model;
 
+
 /**
  *
  * @author aryner
  */
-public class Grade {
+public class Grade extends Model{
 	private int id;
 	private int grader_id;
 	private int picture_id;
@@ -22,6 +23,23 @@ public class Grade {
 	public static final int POOR = 0;
 	public static final int ACCEPTABLE = 1;
 	public static final int GOOD = 2;
+
+	public Grade(int id, int grader_id, int picture_id, int grade, int quality) {
+		this.id = id;
+		this.grader_id = grader_id;
+		this.picture_id = picture_id;
+		this.grade = grade;
+		this.quality = quality;
+	}
+
+	public static Grade getModel(java.sql.ResultSet resultSet) 
+		throws java.sql.SQLException, javax.naming.NamingException {
+		return new Grade (
+			resultSet.getInt("id"),resultSet.getInt("grader_id"),
+			resultSet.getInt("picture_id"),resultSet.getInt("grade"),
+			resultSet.getInt("quality")
+		);
+	}
 
 	/**
 	 * @return the id

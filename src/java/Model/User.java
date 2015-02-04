@@ -10,11 +10,26 @@ package Model;
  *
  * @author aryner
  */
-public class User {
+public class User extends Model {
 	private int id;
 	private String name;
 	private int access;
-	private int password;
+	private String password;
+
+	public User() {}
+
+	public User(int id, String name, int access, String password) {
+		this.id = id;
+		this.name = name;
+		this.access = access;
+		this.password = password;
+	}
+
+	public static User getModel(java.sql.ResultSet resultSet) 
+		throws java.sql.SQLException, javax.naming.NamingException {
+		return new User( resultSet.getInt("id"),resultSet.getString("name"),
+				 resultSet.getInt("access"),resultSet.getString("password"));
+	}
 
 	/**
 	 * @return the id
@@ -61,14 +76,14 @@ public class User {
 	/**
 	 * @return the password
 	 */
-	public int getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
 	/**
 	 * @param password the password to set
 	 */
-	public void setPassword(int password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 	
