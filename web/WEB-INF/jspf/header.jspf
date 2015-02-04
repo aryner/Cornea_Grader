@@ -15,7 +15,7 @@
 			<span class="welcome">
 				<%
 					if(session.getAttribute("user") != null) {
-						out.print("Welcome " + ((User)session.getAttribute("user")).getName()+", id:"+((User)session.getAttribute("user")).getId());
+						out.print("Welcome " + ((User)session.getAttribute("user")).getName());
 					}
 				%>
 			</span>

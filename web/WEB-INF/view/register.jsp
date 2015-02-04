@@ -10,6 +10,9 @@
 <p><a href="index.jsp">Already registered?</a></p>
 
 	<%
+		if(session.getAttribute("user") != null) {
+			response.sendRedirect("/Cornea_Grader/home"); 
+		}
 		if(session.getAttribute("error") != null) {
 			out.print("<p style='color:red'>" + session.getAttribute("error") + "</p>");
 			session.removeAttribute("error");

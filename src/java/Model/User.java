@@ -49,6 +49,14 @@ public class User extends Model {
 		return (User)SQLCommands.queryModel(getQuery, Model.USER).get(0);
 	}
 
+	public static User login(String name, String password) {
+		String getQuery = "SELECT * FROM user WHERE name='"+name+"' AND password='"+password+"'";
+		ArrayList<Model> users = SQLCommands.queryModel(getQuery, Model.USER);
+
+		if(users.isEmpty()) return null;
+		return (User)users.get(0);
+	}
+
 	/**
 	 * @return the id
 	 */

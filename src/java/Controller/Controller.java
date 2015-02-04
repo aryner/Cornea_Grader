@@ -19,7 +19,7 @@ import Model.*;
  *
  * @author aryner
  */
-@WebServlet(name="Controller", urlPatterns={"/Controller","/register","/createUser","/home","/logout"})
+@WebServlet(name="Controller", urlPatterns={"/Controller","/register","/createUser","/home","/logout","/login"})
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
@@ -92,6 +92,26 @@ public class Controller extends HttpServlet {
 				response.sendRedirect("/Cornea_Grader/register"); 
 				return;
 			}
+		}
+		else if(userPath.equals("/login")) {
+			String name = request.getParameter("userName");
+			String password = request.getParameter("password");
+			user = User.login(name, password);
+
+			if(user == null) {
+				session.setAttribute("error", "Incorrect name or password");
+				response.sendRedirect("/Cornea_Grader/"); 
+				return;
+			}
+
+			session.setAttribute("user",user);
+			response.sendRedirect("/Cornea_Grader/home"); 
+			return;
+		}
+		else if(userPath.equals("/logout")) {
+			session.removeAttribute("user");
+			response.sendRedirect("/Cornea_Grader/"); 
+			return;
 		}
 
 		String url = "/WEB-INF/view" + userPath + ".jsp";
