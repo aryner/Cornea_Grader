@@ -19,7 +19,9 @@ import Model.*;
  *
  * @author aryner
  */
-@WebServlet(name="Controller", urlPatterns={"/Controller","/register","/createUser","/home","/logout","/login"})
+@WebServlet(name="Controller", urlPatterns={"/Controller","/register","/createUser","/home","/logout","/login","/upload_excel",
+					"/upload_picture_data"
+			       })
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
@@ -110,6 +112,11 @@ public class Controller extends HttpServlet {
 		}
 		else if(userPath.equals("/logout")) {
 			session.removeAttribute("user");
+			response.sendRedirect("/Cornea_Grader/"); 
+			return;
+		}
+		else if(userPath.equals("/upload_picture_data")){
+			session.setAttribute("errors", Picture.upload_picture_data(request));
 			response.sendRedirect("/Cornea_Grader/"); 
 			return;
 		}

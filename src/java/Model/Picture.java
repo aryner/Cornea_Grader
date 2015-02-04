@@ -6,6 +6,15 @@
 
 package Model;
 
+import java.util.*;
+import java.io.*;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.fileupload.FileItem; 
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload; 
+import org.apache.poi.ss.usermodel.*; 
+import org.apache.poi.xssf.usermodel.*; 
+import Utilities.*;
 
 /**
  *
@@ -21,10 +30,19 @@ public class Picture extends Model{
 	private int plus_one_exposure;
 	private int right_left;
 
+	public static final int UNKNOWN = -1;
+
 	public static final int DSLR = 0;
 	public static final int CELLSCOPE = 1;
+
+	public static final int NOT_HDR = 0;
 	public static final int HDR = 1;
+
+	public static final int NOT_PLUS_ONE = 0;
 	public static final int PLUS_ONE_EXPOSURE = 1;
+
+	public static final int NOT_UPLOADED = 0;
+	public static final int UPLOADED = 1;
 
 	public Picture( int id, String name, int patient_number, int uploaded, 
 			int dslr_cellscope, int hdr, int plus_one_exposure, int right_left) {
@@ -46,6 +64,71 @@ public class Picture extends Model{
 				resultSet.getInt("DSLR_cellscope"),resultSet.getInt("HDR"),
 				resultSet.getInt("plus_one_exposure"),resultSet.getInt("right_left")
 		);
+	}
+
+	public static ArrayList<String> upload_picture_data(HttpServletRequest request) {
+		ArrayList<String> errors = new ArrayList<String>();
+
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		factory.setSizeThreshold(Constants.UPLOAD_SIZE_THRESHOLD);
+		new File(Constants.TEMP_DIR).mkdirs();
+		factory.setRepository(new File(Constants.TEMP_DIR));
+
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		upload.setSizeMax(Constants.MAX_UPLOAD_SIZE);
+
+		try {
+			List fileItems = upload.parseRequest(request);
+			Iterator i = fileItems.iterator();
+
+			if(i.hasNext()) {
+				FileItem fileItem = (FileItem)i.next();
+				String fileName = fileItem.getName();
+
+				if(Tools.excelExtension(Tools.getExtension(fileName))) {
+					new File(Constants.TEMP_DIR).mkdirs();
+					File file = new File(Constants.TEMP_DIR+Constants.FILE_SEP+fileName);
+					fileItem.write(file);
+
+					errors.addAll(enterUploadedData(fileName));
+					file.delete();
+				}
+				else errors.add(Constants.NOT_EXCEL);
+			}
+		} catch(org.apache.commons.fileupload.FileUploadException e) {
+			e.printStackTrace(System.out);
+		} catch(Exception e) {
+			e.printStackTrace(System.out);
+		}
+
+		return errors;
+	}
+
+	private static ArrayList<String> enterUploadedData(String fileName) {
+		ArrayList<String> errors = new ArrayList<String>();
+
+		try {
+			FileInputStream file = new FileInputStream(fileName);
+			XSSFWorkbook workbook = new XSSFWorkbook(file);
+			XSSFSheet sheet = workbook.getSheetAt(0);
+
+			int rowStart = sheet.getFirstRowNum();
+			int rowEnd = sheet.getLastRowNum();
+			int colStart = sheet.getRow(rowStart).getFirstCellNum();
+			int colEnd = sheet.getRow(rowStart).getLastCellNum();
+
+			int [] indices = ExcelTools.getColumnIndices(colStart, colEnd, sheet.getRow(rowStart));
+			if(Tools.arrayContains(indices, -1)) {
+				errors.add(Constants.IMPROPER_EXCEL_FORMAT);
+				return errors;
+			}
+
+			errors.addAll(ExcelTools.readFile(indices, sheet, rowStart+1, rowEnd));
+
+		} catch (IOException e) {
+			e.printStackTrace(System.out);
+		}
+		return errors;
 	}
 
 	/**

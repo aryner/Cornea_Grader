@@ -19,9 +19,9 @@ public class User extends Model {
 	private int access;
 	private String password;
 
-	private static final int GRADER = 1;
-	private static final int UPLOADER = 2;
-	private static final int GRADER_UPLOADER = 3;
+	public static final int GRADER = 1;
+	public static final int UPLOADER = 2;
+	public static final int GRADER_UPLOADER = 3;
 
 	public User(int id, String name, int access, String password) {
 		this.id = id;
@@ -55,6 +55,10 @@ public class User extends Model {
 
 		if(users.isEmpty()) return null;
 		return (User)users.get(0);
+	}
+
+	public boolean canUpload() {
+		return (this.access == UPLOADER) || (this.access == GRADER_UPLOADER);
 	}
 
 	/**

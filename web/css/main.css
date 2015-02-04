@@ -105,3 +105,16 @@ body {
 .error {
 	color: red;
 }
+
+.wideContainer {
+	width:100%;
+	clear: both;
+	margin: 20px;
+	padding: 10px;
+}
+
+.column {
+	width: 150px;
+	float: left; 
+	text-align:center;
+}
