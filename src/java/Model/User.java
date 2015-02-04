@@ -6,6 +6,9 @@
 
 package Model;
 
+import Utilities.*;
+import java.util.*;
+
 /**
  *
  * @author aryner
@@ -15,8 +18,6 @@ public class User extends Model {
 	private String name;
 	private int access;
 	private String password;
-
-	public User() {}
 
 	public User(int id, String name, int access, String password) {
 		this.id = id;
@@ -29,6 +30,19 @@ public class User extends Model {
 		throws java.sql.SQLException, javax.naming.NamingException {
 		return new User( resultSet.getInt("id"),resultSet.getString("name"),
 				 resultSet.getInt("access"),resultSet.getString("password"));
+	}
+
+	public static User register(String name, int access, String password) {
+		String getQuery = "SELECT * FROM user WHERE name='"+name+"'";
+		ArrayList<Model> users = SQLCommands.queryModel(getQuery, Model.USER);
+
+		if(users.isEmpty()) return null;
+
+		String insertQuery = "INSERT INTO user (name, access, password) VALUES ("+
+			       "'"+name+"', '"+access+"', '"+password+"')";
+		SQLCommands.update(insertQuery);
+		
+		return (User)SQLCommands.queryModel(getQuery, Model.USER).get(0);
 	}
 
 	/**

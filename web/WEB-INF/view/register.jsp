@@ -31,7 +31,7 @@
 		Select which type of grader you are:
 		<select name="graderType" class="btn bigBtn">
 			<option value="0">Grader</option>
-			<option value="1">Up-Loader</option>
+			<option value="1">Uploader</option>
 			<option value="2">Both</option>
 		</select>
 	<p>

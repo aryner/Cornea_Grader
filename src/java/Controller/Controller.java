@@ -13,12 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.*;
+import Model.*;
 
 /**
  *
  * @author aryner
  */
-@WebServlet(name="Controller", urlPatterns={"/Controller","/register"})
+@WebServlet(name="Controller", urlPatterns={"/Controller","/register","/createUser"})
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 	/**
@@ -63,6 +64,33 @@ public class Controller extends HttpServlet {
 		throws ServletException, IOException {
 		String userPath = request.getServletPath(); 
 		HttpSession session = request.getSession(); 
+
+		if(userPath.equals("/createUser")) {
+			String name = request.getParameter("userName");
+			String password = request.getParameter("password");
+			String rePassword = request.getParameter("rePassword");
+			String type = request.getParameter("graderType");
+
+			if(password.equals(rePassword)){
+				User user = User.register(name, Integer.parseInt(type), password);
+
+				if(user == null) {
+					session.setAttribute("error", "That user name has been taken");
+					response.sendRedirect("/Cornea_Grader/register");
+					return;
+				}
+				else { 
+					session.setAttribute("user", user); 
+					response.sendRedirect("/Cornea_Grader/home"); 
+					return;
+				} 
+			}
+			else {
+				session.setAttribute("error", "Passwords do not match");
+				response.sendRedirect("/Cornea_Grader/register"); 
+				return;
+			}
+		}
 
 		String url = "/WEB-INF/view" + userPath + ".jsp";
 
