@@ -16,6 +16,14 @@ import Model.*;
 public class DataBaseTools {
 	public static void insertAndUpdateRecords(ArrayList<String> fileNames) {
 		ArrayList<String> alreadyUploaded = findAlreadyUploaded(fileNames);
+
+		if(!alreadyUploaded.isEmpty()) {
+			updateRecords(alreadyUploaded);
+		}
+
+		if(!fileNames.isEmpty()) {
+			insertRecords(fileNames);
+		}
 	}
 
 	public static void insertAndUpdateRecords(ArrayList<String> fileNames, ArrayList<Integer> dslr, ArrayList<Integer> hdr, ArrayList<Integer> exposure) {
@@ -32,18 +40,22 @@ public class DataBaseTools {
 		}
 	}
 
-	public static void updateRecords(ArrayList<String> fileNames, ArrayList<Integer> dslr, ArrayList<Integer> hdr, ArrayList<Integer> exposure) {
-		String query = "UPDATE picture SET patient_number = CASE name ";
-		String queryEnd = "";
-		for(String fileName : fileNames) {
-			query += " WHEN '"+fileName+"' THEN '"+Tools.extractPatientNumber(fileName)+"' ";
-			if(queryEnd.length() > 0) queryEnd += ", ";
-			queryEnd += "'"+fileName+"'";
-		}
-		query += " END WHERE name IN ("+queryEnd+")";
-		SQLCommands.update(query);
+	public static void updateRecords(ArrayList<String> fileNames) {
+		String endQuery = " END WHERE name IN ("+Tools.singleQuoteCommaSeparated(fileNames)+")";
 
-		query = "UPDATE picture SET DSLR_cellscope = CASE name "+
+		ArrayList<Integer> uploadFlags = new ArrayList<Integer>();
+		Tools.populateArrayList(uploadFlags, Picture.UPLOADED, fileNames.size());
+		
+		String query = "UPDATE picture SET uploaded = CASE name "+
+			generateCases(fileNames, uploadFlags)+endQuery;
+
+		SQLCommands.update(query);
+	}
+
+	public static void updateRecords(ArrayList<String> fileNames, ArrayList<Integer> dslr, ArrayList<Integer> hdr, ArrayList<Integer> exposure) {
+		String queryEnd = Tools.singleQuoteCommaSeparated(fileNames);
+
+		String query = "UPDATE picture SET DSLR_cellscope = CASE name "+
 			generateCases(fileNames, dslr)+" END WHERE name IN ("+queryEnd+")";
 		SQLCommands.update(query);
 
@@ -62,6 +74,17 @@ public class DataBaseTools {
 			query += " WHEN '"+when.get(i)+"' THEN '"+ then.get(i).toString() +"' ";
 		}
 		return query;
+	}
+
+	public static void insertRecords(ArrayList<String> fileNames) {
+		String query = "INSERT INTO picture (name, patient_number, uploaded) VALUES ";
+		for(int i=0; i<fileNames.size(); i++) {
+			if(i>0) query += ", ";
+			query += "('"+fileNames.get(i)+"', '"+Tools.extractPatientNumber(fileNames.get(i))+"', '"+
+				Picture.UPLOADED+"')";
+		}
+
+		SQLCommands.update(query);
 	}
 
 	public static void insertRecords(ArrayList<String> fileNames, ArrayList<Integer> dslr, ArrayList<Integer> hdr, ArrayList<Integer> exposure) {

@@ -6,6 +6,8 @@
 
 package Utilities;
 
+import java.util.*;
+
 /**
  *
  * @author aryner
@@ -51,6 +53,19 @@ public class Tools {
 		if(extension.equals("xll"))
 			return true;
 		return extension.equals("xlw");
+	}
+
+	public static String singleQuoteCommaSeparated(ArrayList<String> values) {
+		String result = "";
+		for(String value : values) {
+			result += "'"+value+"', ";
+		}
+
+		return result.substring(0, result.lastIndexOf(","));
+	}
+
+	public static void populateArrayList(ArrayList<Integer> arrayList, int value, int count) {
+		for(int i=0; i<count; i++) arrayList.add(value);
 	}
 
 	public static void setArray(int [] array, int set) {
