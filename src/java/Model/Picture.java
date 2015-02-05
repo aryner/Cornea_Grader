@@ -44,6 +44,9 @@ public class Picture extends Model{
 	public static final int NOT_UPLOADED = 0;
 	public static final int UPLOADED = 1;
 
+	public static final int EXCEL_UPLOAD = 0;
+	public static final int PICTURE_UPLOAD = 1;
+
 	public Picture( int id, String name, int patient_number, int uploaded, 
 			int dslr_cellscope, int hdr, int plus_one_exposure, int right_left) {
 		this.id = id;
@@ -66,8 +69,9 @@ public class Picture extends Model{
 		);
 	}
 
-	public static ArrayList<String> upload_picture_data(HttpServletRequest request) {
+	public static ArrayList<String> upload(HttpServletRequest request, int type) {
 		ArrayList<String> errors = new ArrayList<String>();
+		ArrayList<String> pictureNames = new ArrayList<String>();
 
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		factory.setSizeThreshold(Constants.UPLOAD_SIZE_THRESHOLD);
@@ -81,25 +85,55 @@ public class Picture extends Model{
 			List fileItems = upload.parseRequest(request);
 			Iterator i = fileItems.iterator();
 
-			if(i.hasNext()) {
+			while(i.hasNext()) {
 				FileItem fileItem = (FileItem)i.next();
 				String fileName = fileItem.getName();
 
-				if(Tools.excelExtension(Tools.getExtension(fileName))) {
-					new File(Constants.TEMP_DIR).mkdirs();
-					File file = new File(Constants.TEMP_DIR+Constants.FILE_SEP+fileName);
-					fileItem.write(file);
-
-					errors.addAll(enterUploadedData(fileName));
-					file.delete();
-				}
-				else errors.add(Constants.NOT_EXCEL);
+				if(type == EXCEL_UPLOAD) 
+					errors.addAll(upload_excel(fileName, fileItem));
+				else if(type == PICTURE_UPLOAD) 
+					errors.addAll(upload_picture(fileName, fileItem, pictureNames));
 			}
 		} catch(org.apache.commons.fileupload.FileUploadException e) {
 			e.printStackTrace(System.out);
 		} catch(Exception e) {
 			e.printStackTrace(System.out);
 		}
+
+		if(type == PICTURE_UPLOAD) ;//insert fileNames into db/update existing records
+
+		return errors;
+	}
+
+	private static ArrayList<String> upload_picture(String fileName, FileItem fileItem, ArrayList<String> pictureNames) 
+			throws Exception{
+		ArrayList<String> errors = new ArrayList<String>();
+
+		if(Tools.pictureExtension(Tools.getExtension(fileName))) {
+			new File(Constants.PICTURE_DIR).mkdirs();
+			File file = new File(Constants.PICTURE_DIR+fileName);
+			fileItem.write(file);
+
+			pictureNames.add(fileName);
+		}
+		else errors.add(Constants.NOT_PICTURE);
+
+		return errors;
+	}
+
+	private static ArrayList<String> upload_excel(String fileName, FileItem fileItem)
+			throws Exception {
+		ArrayList<String> errors = new ArrayList<String>();
+
+		if(Tools.excelExtension(Tools.getExtension(fileName))) {
+			new File(Constants.TEMP_DIR).mkdirs();
+			File file = new File(Constants.TEMP_DIR+fileName);
+			fileItem.write(file);
+
+			errors.addAll(enterUploadedData(fileName));
+			file.delete();
+		}
+		else errors.add(Constants.NOT_EXCEL);
 
 		return errors;
 	}
@@ -108,7 +142,7 @@ public class Picture extends Model{
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			FileInputStream file = new FileInputStream(Constants.TEMP_DIR+Constants.FILE_SEP+fileName);
+			FileInputStream file = new FileInputStream(Constants.TEMP_DIR+fileName);
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
 			XSSFSheet sheet = workbook.getSheetAt(0);
 

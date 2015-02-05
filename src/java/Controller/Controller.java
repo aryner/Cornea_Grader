@@ -117,7 +117,12 @@ public class Controller extends HttpServlet {
 			return;
 		}
 		else if(userPath.equals("/upload_picture_data")){
-			session.setAttribute("errors", Picture.upload_picture_data(request));
+			session.setAttribute("errors", Picture.upload(request, Picture.EXCEL_UPLOAD));
+			response.sendRedirect("/Cornea_Grader/"); 
+			return;
+		}
+		else if(userPath.equals("/insert_pictures")) {
+			session.setAttribute("errors", Picture.upload(request, Picture.PICTURE_UPLOAD));
 			response.sendRedirect("/Cornea_Grader/"); 
 			return;
 		}

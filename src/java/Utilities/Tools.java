@@ -15,6 +15,17 @@ public class Tools {
 		return fileName.substring(fileName.lastIndexOf(".")+1, fileName.length());
 	}
 
+	public static boolean pictureExtension(String extension) {
+		extension = extension.toLowerCase();
+		if(extension.equals("jpg"))
+			return true;
+		if(extension.equals("jpeg"))
+			return true;
+		if(extension.equals("png"))
+			return true;
+		return extension.equals("gif");
+	}
+
 	public static boolean excelExtension(String extension) {
 		extension = extension.toLowerCase();
 		if(extension.equals("xls"))
