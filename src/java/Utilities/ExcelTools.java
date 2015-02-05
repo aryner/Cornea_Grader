@@ -71,7 +71,7 @@ public class ExcelTools {
 
 	private static void extractString(ArrayList<String> errors, ArrayList<String> texts, Cell cell) {
 		if(cell == null) {
-			errors.add(missingData(cell));
+			errors.add(missingData());
 		} else if(cell.getCellType() != Cell.CELL_TYPE_STRING) {
 			errors.add(wrongFormat(cell));
 		} else {
@@ -95,11 +95,15 @@ public class ExcelTools {
 		}
 	}
 
+	private static String missingData() {
+		return "There is missing data in the excel file";
+	}
+
 	private static String missingData(Cell cell) {
-		return "There is missing data in column "+cell.getColumnIndex()+", row "+cell.getRowIndex();
+		return "There is missing data in column "+(cell.getColumnIndex()+1)+", row "+(cell.getRowIndex()+1);
 	}
 
 	private static String wrongFormat(Cell cell) {
-		return "The cell at column "+cell.getColumnIndex()+", row "+cell.getRowIndex()+" is not formated correctly";
+		return "The cell at column "+(cell.getColumnIndex()+1)+", row "+(cell.getRowIndex()+1)+" is not formated correctly";
 	}
 }

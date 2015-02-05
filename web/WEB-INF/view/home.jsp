@@ -13,9 +13,9 @@
 
 	ArrayList<String> errors = (ArrayList)session.getAttribute("errors");
 	if(errors != null && !errors.isEmpty()) {
-		out.print("<div class='error'>");
+		out.print("<div class='error'><p>");
 		for(String error : errors) out.print(error+"<br>");
-		out.print("<\\div>");
+		out.print("</p></div>");
 
 		session.removeAttribute("errors");
 	}
