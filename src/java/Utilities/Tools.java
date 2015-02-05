@@ -82,4 +82,11 @@ public class Tools {
 	public static String extractPatientNumber(String fileName) {
 		return fileName.substring(2,5);
 	}
+
+	public static ArrayList<String> getPatientNumbers(ArrayList<String> names) {
+		ArrayList<String> numbers = new ArrayList<String>();
+		for(String name : names) numbers.add(extractPatientNumber(name));
+
+		return numbers;
+	}
 }

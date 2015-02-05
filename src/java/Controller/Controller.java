@@ -45,6 +45,10 @@ public class Controller extends HttpServlet {
 			response.sendRedirect("/Cornea_Grader/index.jsp");
 			return;
 		}
+		else if(userPath.equals("/home")) {
+			request.setAttribute("uploaded",Picture.getUploadedPictures());
+			request.setAttribute("not_uploaded",Picture.getNotUploadedPictures());
+		}
 
 		String url = "/WEB-INF/view" + userPath + ".jsp";
 

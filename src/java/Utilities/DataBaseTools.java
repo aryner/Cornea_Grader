@@ -55,7 +55,12 @@ public class DataBaseTools {
 	public static void updateRecords(ArrayList<String> fileNames, ArrayList<Integer> dslr, ArrayList<Integer> hdr, ArrayList<Integer> exposure) {
 		String queryEnd = Tools.singleQuoteCommaSeparated(fileNames);
 
-		String query = "UPDATE picture SET DSLR_cellscope = CASE name "+
+		String query = "UPDATE picture SET patient_number = CASE name "+
+			generateCases(fileNames,Tools.getPatientNumbers(fileNames))+
+			" END WHERE name IN ("+queryEnd+")";
+		SQLCommands.update(query);
+
+		query = "UPDATE picture SET DSLR_cellscope = CASE name "+
 			generateCases(fileNames, dslr)+" END WHERE name IN ("+queryEnd+")";
 		SQLCommands.update(query);
 
@@ -77,11 +82,10 @@ public class DataBaseTools {
 	}
 
 	public static void insertRecords(ArrayList<String> fileNames) {
-		String query = "INSERT INTO picture (name, patient_number, uploaded) VALUES ";
+		String query = "INSERT INTO picture (name, uploaded) VALUES ";
 		for(int i=0; i<fileNames.size(); i++) {
 			if(i>0) query += ", ";
-			query += "('"+fileNames.get(i)+"', '"+Tools.extractPatientNumber(fileNames.get(i))+"', '"+
-				Picture.UPLOADED+"')";
+			query += "('"+fileNames.get(i)+"', '" + Picture.UPLOADED+"')";
 		}
 
 		SQLCommands.update(query);

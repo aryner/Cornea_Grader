@@ -164,6 +164,16 @@ public class Picture extends Model{
 		return errors;
 	}
 
+	public static ArrayList<Model> getUploadedPictures() {
+		String query = "SELECT * FROM picture WHERE uploaded="+UPLOADED;
+		return SQLCommands.queryModel(query,Model.PICTURE);
+	}
+
+	public static ArrayList<Model> getNotUploadedPictures() {
+		String query = "SELECT * FROM picture WHERE uploaded="+NOT_UPLOADED;
+		return SQLCommands.queryModel(query,Model.PICTURE);
+	}
+
 	/**
 	 * @return the id
 	 */
