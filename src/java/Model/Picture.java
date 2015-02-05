@@ -100,7 +100,7 @@ public class Picture extends Model{
 			e.printStackTrace(System.out);
 		}
 
-		if(type == PICTURE_UPLOAD) ;//insert fileNames into db/update existing records
+		if(type == PICTURE_UPLOAD) DataBaseTools.insertAndUpdateRecords(pictureNames);
 
 		return errors;
 	}

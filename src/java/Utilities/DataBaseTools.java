@@ -14,6 +14,10 @@ import Model.*;
  * @author aryner
  */
 public class DataBaseTools {
+	public static void insertAndUpdateRecords(ArrayList<String> fileNames) {
+		ArrayList<String> alreadyUploaded = findAlreadyUploaded(fileNames);
+	}
+
 	public static void insertAndUpdateRecords(ArrayList<String> fileNames, ArrayList<Integer> dslr, ArrayList<Integer> hdr, ArrayList<Integer> exposure) {
 		ArrayList<ArrayList> alreadyUploaded = findAlreadyUploaded(fileNames, dslr, hdr, exposure);
 
@@ -23,7 +27,7 @@ public class DataBaseTools {
 		}
 
 		//insert new files
-		if(fileNames.size()>0) {
+		if(!fileNames.isEmpty()) {
 			insertRecords(fileNames, dslr, hdr, exposure);
 		}
 	}
@@ -71,6 +75,26 @@ public class DataBaseTools {
 		SQLCommands.update(query);
 	}
 
+	private static ArrayList<String> findAlreadyUploaded(ArrayList<String> fileNames) {
+		String query = "SELECT * FROM picture WHERE ";
+		for(int i=0; i<fileNames.size(); i++) {
+			if(i>0) query += " OR ";
+			query += " name='"+fileNames.get(i)+"' ";
+		}
+
+		ArrayList<String> alreadyUploaded = new ArrayList<String>();
+		ArrayList<Model> inDb = SQLCommands.queryModel(query, Model.PICTURE);
+
+		for(Model model : inDb) {
+			String picName = ((Picture)model).getName();
+			if(fileNames.contains(picName)) {
+				alreadyUploaded.add(fileNames.remove(fileNames.lastIndexOf(picName)));
+			}
+		}
+
+		return alreadyUploaded;
+	}
+
 	private static ArrayList<ArrayList> findAlreadyUploaded(ArrayList<String> fileNames, ArrayList<Integer> dslr, ArrayList<Integer> hdr, ArrayList<Integer> exposure) {
 		String query = "SELECT * FROM picture WHERE ";
 		for(int i=0; i<fileNames.size(); i++) {
@@ -82,19 +106,16 @@ public class DataBaseTools {
 		ArrayList<ArrayList> alreadyUploaded = new ArrayList<ArrayList>();
 		alreadyUploaded.add(new ArrayList<String>());
 		for(int i=0; i<3; i++) alreadyUploaded.add(new ArrayList<Integer>());
-		ArrayList<Integer> indices = new ArrayList<Integer>();
 
-		for(int i=0; i<inDb.size(); i++) {
-			String picName = ((Picture)inDb.get(i)).getName();
+		for(Model model : inDb) {
+			String picName = ((Picture)model).getName();
 			if(fileNames.contains(picName)) {
-				indices.add(i);
+				int index = fileNames.lastIndexOf(picName);
+				alreadyUploaded.get(0).add(fileNames.remove(index));
+				alreadyUploaded.get(1).add(dslr.remove(index));
+				alreadyUploaded.get(2).add(hdr.remove(index));
+				alreadyUploaded.get(3).add(exposure.remove(index));
 			}
-		}
-		for(int i=indices.size()-1; i>=0; i--) {
-			alreadyUploaded.get(0).add(fileNames.remove(i));
-			alreadyUploaded.get(1).add(dslr.remove(i));
-			alreadyUploaded.get(2).add(hdr.remove(i));
-			alreadyUploaded.get(3).add(exposure.remove(i));
 		}
 
 		return alreadyUploaded;
