@@ -108,12 +108,12 @@ public class Picture extends Model{
 		ArrayList<String> errors = new ArrayList<String>();
 
 		try {
-			FileInputStream file = new FileInputStream(fileName);
+			FileInputStream file = new FileInputStream(Constants.TEMP_DIR+Constants.FILE_SEP+fileName);
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
 			XSSFSheet sheet = workbook.getSheetAt(0);
 
 			int rowStart = sheet.getFirstRowNum();
-			int rowEnd = sheet.getLastRowNum();
+			int rowEnd = sheet.getLastRowNum()+1;
 			int colStart = sheet.getRow(rowStart).getFirstCellNum();
 			int colEnd = sheet.getRow(rowStart).getLastCellNum();
 
