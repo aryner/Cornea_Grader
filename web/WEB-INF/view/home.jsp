@@ -26,5 +26,8 @@
 	<div class="column">
 		<a href="/Cornea_Grader/upload_excel" class="btn menubtn">Upload Excel Data</a>
 	</div>
+	<div class="column">
+		<a href="/Cornea_Grader/upload_pictures" class="btn menubtn">Upload Pictures</a>
+	</div>
 	<%}%>
 </div>

@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.*;
 import Model.*;
+import Utilities.*;
 
 /**
  *
  * @author aryner
  */
 @WebServlet(name="Controller", urlPatterns={"/Controller","/register","/createUser","/home","/logout","/login","/upload_excel",
-					"/upload_picture_data"
+					"/upload_picture_data","/insert_pictures","/upload_pictures"
 			       })
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -79,7 +80,7 @@ public class Controller extends HttpServlet {
 				user = User.register(name, Integer.parseInt(type), password);
 
 				if(user == null) {
-					session.setAttribute("error", "That user name has been taken");
+					session.setAttribute("error", Constants.TAKEN_USERNAME);
 					response.sendRedirect("/Cornea_Grader/register");
 					return;
 				}
@@ -90,7 +91,7 @@ public class Controller extends HttpServlet {
 				} 
 			}
 			else {
-				session.setAttribute("error", "Passwords do not match");
+				session.setAttribute("error", Constants.PASSWORDS_DONT_MATCH);
 				response.sendRedirect("/Cornea_Grader/register"); 
 				return;
 			}
@@ -101,7 +102,7 @@ public class Controller extends HttpServlet {
 			user = User.login(name, password);
 
 			if(user == null) {
-				session.setAttribute("error", "Incorrect name or password");
+				session.setAttribute("error", Constants.INCORRECT_NAME_PASS);
 				response.sendRedirect("/Cornea_Grader/"); 
 				return;
 			}

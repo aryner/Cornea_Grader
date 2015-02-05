@@ -21,4 +21,7 @@ public class Constants {
 
 	public static final String NOT_EXCEL = "You can only upload excel files that have excel extensions";
 	public static final String IMPROPER_EXCEL_FORMAT = "The excel file uploaded was not formatted properly";
+	public static final String TAKEN_USERNAME = "That user name has been taken";
+	public static final String PASSWORDS_DONT_MATCH = "Passwords do not match";
+	public static final String INCORRECT_NAME_PASS = "Incorrect name or password";
 }
