@@ -9,28 +9,31 @@
 <%@page import="java.util.*"%>
 
 <%
-	String fileName = request.getParameter("fileName");
+	Picture picture = (Picture)request.getAttribute("picture");
+	String fileName = picture.getName();
 	ArrayList<Picture> neighbors = (ArrayList)request.getAttribute("neighbors");
 
 	String nextName = neighbors.isEmpty() ? fileName : neighbors.get(1).getName();
 	String previousName = neighbors.isEmpty() ? fileName : neighbors.get(0).getName();
+	int side = picture.getRight_left();
 %>
 
 <div id="content">
 	<h2>Right or Left?</h2>
 
 	<div class="container">
-		<img src="<%out.print(Constants.PICTURE_PATH+"?fileName="+fileName);%>" class="img smImg">
+		<img src="<%out.print(Constants.PICTURE_PATH+"?fileName="+fileName);%>" class="img bgImg">
 	</div>
 
-	<form action="update_right_left" method="POST">
+	<form action="update_right_left" class="right_left_form" method="POST">
 		<div class="container">
 			<input type="hidden" name="previous" value="<%out.print(previousName);%>">
 			<input type="hidden" name="next" value="<%out.print(nextName);%>">
 			<input type="hidden" name="nextFile" value="<%out.print(fileName);%>">
 			<input type="hidden" name="file" value="<%out.print(fileName);%>">
-			<input type="radio" name="side" value="left"> Left 
-			<input type="radio" name="side" value="right"> Right 
+			<input type="radio" name="side" value="left" <%if(side==Picture.LEFT)out.print("checked='true'");%>> Left 
+			<input type="radio" name="side" value="delete"> Delete
+			<input type="radio" name="side" value="right"<%if(side==Picture.RIGHT)out.print("checked='true'");%>> Right 
 		</div>
 		<div class="container">
 			<input type="submit" class="btn" value="Previous">

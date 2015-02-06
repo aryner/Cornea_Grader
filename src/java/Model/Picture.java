@@ -46,6 +46,9 @@ public class Picture extends Model{
 	public static final int EXCEL_UPLOAD = 0;
 	public static final int PICTURE_UPLOAD = 1;
 
+	public static final int RIGHT = 0;
+	public static final int LEFT = 1;
+
 	public Picture( int id, String name, int patient_number, int uploaded, 
 			int dslr_cellscope, int hdr, int plus_one_exposure, int right_left) {
 		this.id = id;
@@ -170,8 +173,22 @@ public class Picture extends Model{
 	}
 
 	public static String assign_right_left(HttpServletRequest request) {
+		String pictureName = request.getParameter("file");
+		String side = request.getParameter("side");
+
+		if (side != null) {
+			if(side.equals("left"))
+				assignSide(pictureName, LEFT);
+			else if(side.equals("right"))
+				assignSide(pictureName, RIGHT);
+		}
 
 		return request.getParameter("nextFile");
+	}
+
+	private static void assignSide(String name, int side) {
+		String query = "UPDATE picture SET right_left="+side+" WHERE name='"+name+"'";
+		SQLCommands.update(query);
 	}
 
 	public static ArrayList<Model> getUploadedPictures() {

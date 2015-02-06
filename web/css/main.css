@@ -142,6 +142,16 @@ body {
 	height: 300px;
 }
 
+.bgImg {
+	margin: 2px;
+	margin-bottom: 0px;
+	height: 500px;
+}
+
 input[type="radio"] {
-	margin-left: 30px;
+	margin-left: 20px;
+}
+
+.right_left_form {
+	margin-left: 200px;
 }
