@@ -24,19 +24,25 @@
 	ArrayList<Picture> not_uploaded = (ArrayList)request.getAttribute("not_uploaded");
 %>
 
-<div class="wideContainter">
 	<%if(user.canUpload()) { %>
-	<div class="column">
-		<a href="/Cornea_Grader/upload_excel" class="btn menubtn">Upload Excel Data</a>
+	<div class="wideContainter">
+		<div class="column">
+			<a href="/Cornea_Grader/upload_excel" class="btn menubtn">Upload Excel Data</a>
+		</div>
+		<div class="column">
+			<a href="/Cornea_Grader/upload_pictures" class="btn menubtn">Upload Pictures</a>
+		</div>
 	</div>
-	<div class="column">
-		<a href="/Cornea_Grader/upload_pictures" class="btn menubtn">Upload Pictures</a>
+	<%} if(user.canGrade()) {%>
+	<div class="wideContainter">
+		<div class="column">
+			<a href="/Cornea_Grader/grade" class="btn menubtn">Grade</a>
+		</div>
 	</div>
 	<%}%>
-</div>
 
 <div class="container">
-	<div class="fourthColumn">
+	<div class="bigColumn">
 		<h3>Uploaded Images</h3>
 		<%
 		for(Picture pic: uploaded) {
@@ -48,7 +54,7 @@
 		}
 		%>
 	</div>
-	<div class="fourthColumn">
+	<div class="bigColumn">
 		<h3>Images that need to be uploaded</h3>
 		<%
 		for(Picture pic: not_uploaded) {
@@ -56,7 +62,7 @@
 		}
 		%>
 	</div>
-	<div class="fourthColumn">
+	<div class="bigColumn">
 		<h3>Uploaded but no meta data</h3>
 		<%
 		for(Picture pic : uploaded) {

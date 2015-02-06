@@ -25,7 +25,7 @@ import Utilities.*;
 @WebServlet(name="Controller", urlPatterns={
 					"/Controller","/register","/createUser","/home","/logout","/login","/upload_excel",
 					"/upload_picture_data","/insert_pictures","/upload_pictures","/img","/assign_right_left",
-					"/update_right_left"
+					"/update_right_left","/grade"
 			       })
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,6 +58,9 @@ public class Controller extends HttpServlet {
 
 			request.setAttribute("picture",Picture.getPicture(fileName));
 			request.setAttribute("neighbors",Picture.getNeighbors(fileName));
+		}
+		else if(userPath.equals("/grade")) {
+			//get images to grade
 		}
 		else if (userPath.equals("/img")) {
 			String fileName = request.getParameter("fileName");

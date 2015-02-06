@@ -58,7 +58,11 @@ public class User extends Model {
 	}
 
 	public boolean canUpload() {
-		return (this.access == UPLOADER) || (this.access == GRADER_UPLOADER);
+		return this.access == UPLOADER || this.access == GRADER_UPLOADER;
+	}
+
+	public boolean canGrade() {
+		return this.access == GRADER || this.access == GRADER_UPLOADER;
 	}
 
 	/**

@@ -119,6 +119,11 @@ body {
 	text-align:center;
 }
 
+.bigColumn {
+	width: 350px;
+	float: left; 
+}
+
 .container {
 	width:80%;
 	clear: both;
@@ -148,7 +153,7 @@ body {
 	height: 500px;
 }
 
-input[type="radio"] {
+input[type="radio"] .right_left_form {
 	margin-left: 20px;
 }
 
