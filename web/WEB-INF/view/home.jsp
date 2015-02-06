@@ -40,7 +40,7 @@
 		<h3>Uploaded Images</h3>
 		<%
 		for(Picture pic: uploaded) {
-			out.print("<a href=#>"+pic.getName());
+			out.print("<a href='assign_right_left?fileName="+pic.getName()+"'>"+pic.getName());
 			if(pic.getRight_left() == -1) {
 				out.print("*");
 			}

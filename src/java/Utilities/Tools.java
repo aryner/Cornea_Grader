@@ -89,4 +89,26 @@ public class Tools {
 
 		return numbers;
 	}
+
+	public static ArrayList getNeighbors(ArrayList arrayList, int index) {
+		ArrayList result = new ArrayList();
+
+		//add the element before or the last if this is the first
+		// element.  If there is only 1 element in the list add nothing
+		if(index>0) {
+			result.add(arrayList.get(index-1));
+		} else if(result.size() > 1) {
+			result.add(arrayList.get(arrayList.size()-1));
+		}
+
+		//add the element after or the first element if this is the last
+		// element.  If there is only 1 element in the list add nothing
+		if(index<arrayList.size()-1) {
+			result.add(arrayList.get(index+1));
+		} else if(result.size() > 1) {
+			result.add(arrayList.get(0));
+		}
+
+		return result;
+	}
 }

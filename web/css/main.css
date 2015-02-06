@@ -63,7 +63,7 @@ body {
 	border: 1px solid darkslategray;
 
 	padding: 6px;
-	margin-left: 20px;
+	margin: 20px;
 	margin-bottom: 0;
 	text-align: center;
 	background-color:  whitesmoke;
@@ -129,4 +129,19 @@ body {
 .fourthColumn {
 	width:25%;
 	float:left;
+}
+
+.img {
+	margin: 2px;
+	margin-bottom: 0px; 
+}
+
+.smImg {
+	margin: 2px;
+	margin-bottom: 0px; 
+	height: 300px;
+}
+
+input[type="radio"] {
+	margin-left: 30px;
 }

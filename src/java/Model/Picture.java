@@ -58,6 +58,11 @@ public class Picture extends Model{
 		this.right_left = right_left;
 	}
 
+	public static Picture getPicture(String fileName) {
+		String query = "SELECT * FROM picture WHERE name='"+fileName+"'";
+		return (Picture)(SQLCommands.queryModel(query,Model.PICTURE).get(0));
+	}
+
 	public static Picture getModel(java.sql.ResultSet resultSet) 
 		throws java.sql.SQLException, javax.naming.NamingException {
 		return new Picture(
@@ -172,6 +177,19 @@ public class Picture extends Model{
 	public static ArrayList<Model> getNotUploadedPictures() {
 		String query = "SELECT * FROM picture WHERE uploaded="+NOT_UPLOADED;
 		return SQLCommands.queryModel(query,Model.PICTURE);
+	}
+
+	public static ArrayList<Picture> getNeighbors(String fileName) {
+		ArrayList<Picture> neighbors = new ArrayList<Picture>();
+		ArrayList<Picture> uploaded = (ArrayList)getUploadedPictures();
+
+		for(int i=0; i<uploaded.size() && neighbors.isEmpty(); i++) {
+			if(uploaded.get(i).getName().equals(fileName)) {
+				uploaded.addAll(Tools.getNeighbors(uploaded, i));
+			}
+		}
+
+		return neighbors;
 	}
 
 	/**

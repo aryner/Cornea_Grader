@@ -6,13 +6,15 @@
 
 package Controller;
 
-import java.io.IOException;
+import java.util.*;
+import java.io.*; 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.annotation.*;
+import javax.servlet.ServletOutputStream; 
 import Model.*;
 import Utilities.*;
 
@@ -20,8 +22,10 @@ import Utilities.*;
  *
  * @author aryner
  */
-@WebServlet(name="Controller", urlPatterns={"/Controller","/register","/createUser","/home","/logout","/login","/upload_excel",
-					"/upload_picture_data","/insert_pictures","/upload_pictures"
+@WebServlet(name="Controller", urlPatterns={
+					"/Controller","/register","/createUser","/home","/logout","/login","/upload_excel",
+					"/upload_picture_data","/insert_pictures","/upload_pictures","/img","/assign_right_left",
+					"/update_right_left"
 			       })
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,6 +52,32 @@ public class Controller extends HttpServlet {
 		else if(userPath.equals("/home")) {
 			request.setAttribute("uploaded",Picture.getUploadedPictures());
 			request.setAttribute("not_uploaded",Picture.getNotUploadedPictures());
+		}
+		else if(userPath.equals("/assign_right_left")) {
+			String fileName = request.getParameter("fileName");
+
+			request.setAttribute("picture",Picture.getPicture(fileName));
+			request.setAttribute("neighbors",Picture.getNeighbors(fileName));
+		}
+		else if (userPath.equals("/img")) {
+			String fileName = request.getParameter("fileName");
+			response.setContentType("image/jpeg");
+			ServletOutputStream outPut = response.getOutputStream(); 
+			FileInputStream imgStream = new FileInputStream(Constants.PICTURE_DIR+fileName);
+
+			BufferedInputStream bufferedIn = new BufferedInputStream(imgStream);
+			BufferedOutputStream bufferedOut = new BufferedOutputStream(outPut);
+
+			int nextByte;
+			while((nextByte = bufferedIn.read()) != -1) {
+				bufferedOut.write(nextByte);
+			}
+
+			bufferedIn.close();
+			imgStream.close();
+			bufferedOut.close();
+			outPut.close();
+			return;
 		}
 
 		String url = "/WEB-INF/view" + userPath + ".jsp";

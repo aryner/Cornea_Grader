@@ -19,6 +19,7 @@ public class Constants {
 
 	public static final String TEMP_DIR = ".."+FILE_SEP+"webapps"+FILE_SEP+"temp"+FILE_SEP;
 	public static final String PICTURE_DIR = ".."+FILE_SEP+"webapps"+FILE_SEP+"Cornea_Grader"+FILE_SEP+"pictures"+FILE_SEP;
+	public static final String PICTURE_PATH = "http://localhost:"+PORT+"/Cornea_Grader/img";
 
 	public static final String NOT_EXCEL = "You can only upload excel files that have excel extensions";
 	public static final String NOT_PICTURE = "You can only upload files that have picture extensions (jpeg, jpg, png, gif)";
