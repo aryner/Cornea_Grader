@@ -160,6 +160,11 @@ public class Controller extends HttpServlet {
 			response.sendRedirect("/Cornea_Grader/"); 
 			return;
 		}
+		else if(userPath.equals("/update_right_left")) {
+			response.sendRedirect("/Cornea_Grader/assign_right_left?fileName="+
+						Picture.assign_right_left(request));
+			return;
+		}
 
 		String url = "/WEB-INF/view" + userPath + ".jsp";
 

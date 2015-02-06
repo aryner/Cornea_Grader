@@ -25,6 +25,8 @@
 
 	<form action="update_right_left" method="POST">
 		<div class="container">
+			<input type="hidden" name="previous" value="<%out.print(previousName);%>">
+			<input type="hidden" name="next" value="<%out.print(nextName);%>">
 			<input type="hidden" name="nextFile" value="<%out.print(fileName);%>">
 			<input type="hidden" name="file" value="<%out.print(fileName);%>">
 			<input type="radio" name="side" value="left"> Left 
@@ -36,3 +38,6 @@
 		</div>
 	</form>
 </div>
+
+<script src="javascripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="javascripts/previous_next.js" type="text/javascript"></script>

@@ -169,6 +169,11 @@ public class Picture extends Model{
 		return errors;
 	}
 
+	public static String assign_right_left(HttpServletRequest request) {
+
+		return request.getParameter("nextFile");
+	}
+
 	public static ArrayList<Model> getUploadedPictures() {
 		String query = "SELECT * FROM picture WHERE uploaded="+UPLOADED;
 		return SQLCommands.queryModel(query,Model.PICTURE);
@@ -185,7 +190,7 @@ public class Picture extends Model{
 
 		for(int i=0; i<uploaded.size() && neighbors.isEmpty(); i++) {
 			if(uploaded.get(i).getName().equals(fileName)) {
-				uploaded.addAll(Tools.getNeighbors(uploaded, i));
+				neighbors.addAll(Tools.getNeighbors(uploaded, i));
 			}
 		}
 

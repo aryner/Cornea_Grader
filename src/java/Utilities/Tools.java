@@ -97,7 +97,7 @@ public class Tools {
 		// element.  If there is only 1 element in the list add nothing
 		if(index>0) {
 			result.add(arrayList.get(index-1));
-		} else if(result.size() > 1) {
+		} else if(arrayList.size() > 1) {
 			result.add(arrayList.get(arrayList.size()-1));
 		}
 
@@ -105,7 +105,7 @@ public class Tools {
 		// element.  If there is only 1 element in the list add nothing
 		if(index<arrayList.size()-1) {
 			result.add(arrayList.get(index+1));
-		} else if(result.size() > 1) {
+		} else if(arrayList.size() > 1) {
 			result.add(arrayList.get(0));
 		}
 
