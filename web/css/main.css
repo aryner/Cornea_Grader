@@ -124,6 +124,18 @@ body {
 	float: left; 
 }
 
+.pictureBox {
+	width: 1200px;
+	float: left;
+}
+
+.newDivLine {
+	clear: both;
+	float: left;
+	display: block;
+	position: relative;
+}
+
 .container {
 	width:80%;
 	clear: both;
@@ -151,6 +163,12 @@ body {
 	margin: 2px;
 	margin-bottom: 0px;
 	height: 500px;
+}
+
+.gradeImg {
+	margin: 2px;
+	margin-bottom: 0px;
+	height: 400px;
 }
 
 input[type="radio"] .right_left_form {

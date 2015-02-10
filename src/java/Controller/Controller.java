@@ -6,7 +6,6 @@
 
 package Controller;
 
-import java.util.*;
 import java.io.*; 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +24,7 @@ import Utilities.*;
 @WebServlet(name="Controller", urlPatterns={
 					"/Controller","/register","/createUser","/home","/logout","/login","/upload_excel",
 					"/upload_picture_data","/insert_pictures","/upload_pictures","/img","/assign_right_left",
-					"/update_right_left","/grade"
+					"/update_right_left","/grade","/submit_grade"
 			       })
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,6 +60,14 @@ public class Controller extends HttpServlet {
 		}
 		else if(userPath.equals("/grade")) {
 			//get images to grade
+			int patientNumber = Grade.getNextPatient(user);
+			int gradeType = Grade.getGradeType(user, patientNumber);
+			int side = Grade.getSide(user, patientNumber, gradeType);
+
+			request.setAttribute("patient_number", patientNumber);
+			request.setAttribute("grade_type", gradeType);
+			request.setAttribute("side", side);
+			request.setAttribute("pictures", Picture.getImages(patientNumber, gradeType, side));
 		}
 		else if (userPath.equals("/img")) {
 			String fileName = request.getParameter("fileName");
@@ -166,6 +173,10 @@ public class Controller extends HttpServlet {
 		else if(userPath.equals("/update_right_left")) {
 			response.sendRedirect("/Cornea_Grader/assign_right_left?fileName="+
 						Picture.assign_right_left(request));
+			return;
+		}
+		else if(userPath.equals("/submit_grade")) {
+			response.sendRedirect("/Cornea_Grader/grade"); 
 			return;
 		}
 
