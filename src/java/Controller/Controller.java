@@ -112,7 +112,7 @@ public class Controller extends HttpServlet {
 		throws ServletException, IOException {
 		String userPath = request.getServletPath(); 
 		HttpSession session = request.getSession(); 
-		User user;// = (User)session.getAttribute("user");
+		User user = (User)session.getAttribute("user");
 
 		if(userPath.equals("/createUser")) {
 			String name = request.getParameter("userName");
@@ -176,6 +176,7 @@ public class Controller extends HttpServlet {
 			return;
 		}
 		else if(userPath.equals("/submit_grade")) {
+			Grade.submitGrade(request, user);
 			response.sendRedirect("/Cornea_Grader/grade"); 
 			return;
 		}

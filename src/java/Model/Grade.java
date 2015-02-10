@@ -8,7 +8,7 @@ package Model;
 
 import java.util.*;
 import Utilities.*;
-
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -55,6 +55,20 @@ public class Grade extends Model{
 		);
 	}
 
+	public static void submitGrade(HttpServletRequest request, User user) {
+		String patient_number = request.getParameter("patient_number");
+		String grade_type = request.getParameter("grade_type");
+		String side = request.getParameter("side");
+		String grade = request.getParameter("grade");
+		String quality = request.getParameter("quality");
+
+		String query = "INSERT INTO grade (grader_id, patient_number, grade_type, side, grade, quality) "+
+				"VALUES ('"+user.getId()+"', '"+patient_number+"', '"+grade_type+"', "+
+				"'"+side+"', '"+grade+"', '"+quality+"')";
+
+		SQLCommands.update(query);
+	}
+
 	public static int getNextPatient(User user) {
 		String query = "SELECT * FROM picture WHERE patient_number NOT IN (SELECT patient_number "+
 				"FROM grade WHERE grader_id="+user.getId()+" GROUP BY patient_number HAVING COUNT(*)=8)"+
@@ -80,16 +94,18 @@ public class Grade extends Model{
 			notGradedTypes.add(DSLR);
 		}
 		else {
-			ArrayList<Integer> gradedTypes = new ArrayList<Integer>();
-			for(Grade grade : alreadyGraded) gradedTypes.add(grade.getGrade_type());
-			if(!gradedTypes.contains(NOT_PLUS_ONE)) notGradedTypes.add(NOT_PLUS_ONE);
-			if(!gradedTypes.contains(PLUS_ONE)) notGradedTypes.add(PLUS_ONE);
-			if(!gradedTypes.contains(HDR)) notGradedTypes.add(HDR);
-			if(!gradedTypes.contains(DSLR)) notGradedTypes.add(DSLR);
+			int [] gradedTypes = {0,0,0,0};
+			for(Grade grade : alreadyGraded) 
+				gradedTypes[grade.getGrade_type()]++;
+			if(gradedTypes[NOT_PLUS_ONE]<2) notGradedTypes.add(NOT_PLUS_ONE);
+			if(gradedTypes[PLUS_ONE]<2) notGradedTypes.add(PLUS_ONE);
+			if(gradedTypes[HDR]<2) notGradedTypes.add(HDR);
+			if(gradedTypes[DSLR]<2) notGradedTypes.add(DSLR);
 		}
 
 		Random rand = new Random();
 
+		if(notGradedTypes.isEmpty()) return -1;
 		return notGradedTypes.get(rand.nextInt((notGradedTypes.size())));
 	}
 

@@ -12,13 +12,12 @@
 	int grade_type = (Integer)request.getAttribute("grade_type");
 	int side = (Integer)request.getAttribute("side");
 	ArrayList<Picture> pictures = (ArrayList)request.getAttribute("pictures");
-	out.print((side==Grade.RIGHT?"right":"left")+ ", grade_type="+grade_type);
 %>
 
 <h2>Grade</h2>
 
 <%
-	if(pictures.isEmpty()) {
+	if(pictures == null || pictures.isEmpty()) {
 		if(patient_number == -1) {
 %>
 <p>All uploaded images with meta data have already been graded by you</p>
@@ -48,6 +47,9 @@
 %>
 
 <form action="submit_grade" method="POST">
+	<input type="hidden" name="patient_number" value="<%out.print(patient_number);%>">
+	<input type="hidden" name="grade_type" value="<%out.print(grade_type);%>">
+	<input type="hidden" name="side" value="<%out.print(side);%>">
 	<div class='bigColumn'>
 		<h3>Corneal Opacity?</h3>
 		<p>

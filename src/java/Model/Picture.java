@@ -219,9 +219,10 @@ public class Picture extends Model{
 
 		String query = "SELECT * FROM picture WHERE patient_number="+patient_num+" AND right_left="+side;
 		if (grade_type == Grade.DSLR) query += " AND DSLR_cellscope="+DSLR;
-		else if(grade_type == Grade.HDR) query += " AND HDR="+HDR;
-		else if(grade_type == Grade.PLUS_ONE) query += " AND HDR="+NOT_HDR+" AND plus_one_exposure="+PLUS_ONE_EXPOSURE;
-		else query += " AND HDR="+NOT_HDR+" AND plus_one_exposure="+NOT_PLUS_ONE;
+		else if(grade_type == Grade.HDR) query += " AND HDR="+HDR+" AND DSLR_cellscope="+CELLSCOPE;
+		else if(grade_type == Grade.PLUS_ONE) 
+			query += " AND HDR="+NOT_HDR+" AND plus_one_exposure="+PLUS_ONE_EXPOSURE+" AND DSLR_cellscope="+CELLSCOPE;
+		else query += " AND HDR="+NOT_HDR+" AND plus_one_exposure="+NOT_PLUS_ONE+" AND DSLR_cellscope="+CELLSCOPE;
 
 		return (ArrayList)SQLCommands.queryModel(query, Model.PICTURE);
 	}
