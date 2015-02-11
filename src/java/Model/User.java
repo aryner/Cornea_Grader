@@ -36,6 +36,18 @@ public class User extends Model {
 				 resultSet.getInt("access"),resultSet.getString("password"));
 	}
 
+	public static Map<Integer, String> userNamesAndIds() {
+		String query = "SELECT * FROM user";
+		ArrayList<User> users = (ArrayList)SQLCommands.queryModel(query, Model.USER);
+		Map<Integer, String> result = new HashMap<Integer, String>();
+
+		for(User user : users) {
+			result.put(user.getId(), user.getName());
+		}
+
+		return result;
+	}
+
 	public static User register(String name, int access, String password) {
 		String getQuery = "SELECT * FROM user WHERE name='"+name+"'";
 		ArrayList<Model> users = SQLCommands.queryModel(getQuery, Model.USER);

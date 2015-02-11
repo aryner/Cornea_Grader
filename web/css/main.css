@@ -178,3 +178,7 @@ input[type="radio"] .right_left_form {
 .right_left_form {
 	margin-left: 200px;
 }
+
+.shiftRight {
+	margin-left:075px;
+}

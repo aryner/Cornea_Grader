@@ -119,6 +119,23 @@ public class Grade extends Model{
 		return RIGHT;
 	}
 
+	public static ArrayList<String> get_CSV_lines() {
+		String query = "SELECT * FROM grade";
+		ArrayList<Grade> grades = (ArrayList)SQLCommands.queryModel(query, Model.GRADE);
+		Map<Integer, String> users = User.userNamesAndIds();
+
+		ArrayList<String> lines = new ArrayList<String>();
+		lines.add("grader, patient number, grade type, side, grade, quality");
+		for(Grade grade : grades) {
+			String line = users.get(grade.getGrader_id())+", "+grade.getPatient_number()+", "+
+					grade.getGrade_type()+", "+grade.getSide()+", "+ grade.getGrade()+", "+
+					grade.getQuality();
+			lines.add(line);
+		}
+
+		return lines;
+	}
+
 	/**
 	 * @return the id
 	 */

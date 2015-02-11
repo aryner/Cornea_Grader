@@ -24,7 +24,7 @@ import Utilities.*;
 @WebServlet(name="Controller", urlPatterns={
 					"/Controller","/register","/createUser","/home","/logout","/login","/upload_excel",
 					"/upload_picture_data","/insert_pictures","/upload_pictures","/img","/assign_right_left",
-					"/update_right_left","/grade","/submit_grade"
+					"/update_right_left","/grade","/submit_grade","/get_csv"
 			       })
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,6 +68,9 @@ public class Controller extends HttpServlet {
 			request.setAttribute("grade_type", gradeType);
 			request.setAttribute("side", side);
 			request.setAttribute("pictures", Picture.getImages(patientNumber, gradeType, side));
+		}
+		else if(userPath.equals("/get_csv")) {
+			request.setAttribute("csvLines",Grade.get_CSV_lines());
 		}
 		else if (userPath.equals("/img")) {
 			String fileName = request.getParameter("fileName");

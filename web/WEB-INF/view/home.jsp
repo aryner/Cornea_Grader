@@ -32,6 +32,9 @@
 		<div class="column">
 			<a href="/Cornea_Grader/upload_pictures" class="btn menubtn">Upload Pictures</a>
 		</div>
+		<div class="column">
+			<a href="/Cornea_Grader/get_csv" class=" btn menubtn">Get CSV of Data</a>
+		</div>
 	</div>
 	<%} if(user.canGrade()) {%>
 	<div class="wideContainter">
@@ -48,7 +51,7 @@
 		for(Picture pic: uploaded) {
 			out.print("<a href='assign_right_left?fileName="+pic.getName()+"'>"+pic.getName());
 			if(pic.getRight_left() == -1) {
-				out.print("*");
+				out.print("***");
 			}
 			out.print("</a><br>");
 		}

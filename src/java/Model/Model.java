@@ -26,6 +26,7 @@ public abstract class Model {
 
 	public static Model getModel(ResultSet resultSet, int modelType) 
 		throws NamingException, SQLException {
+
 		switch (modelType) {
 			case Model.USER:
 				return User.getModel(resultSet);
