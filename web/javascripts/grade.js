@@ -6,6 +6,15 @@
 
 
 $(document).ready(function() {
+	$('.gradeImg').click(function(e) {
+		$('body').append("<img src='"+this.title+"' class='examine'>");
+		$('.examine').fadeIn("slow");
+
+		$('.examine').click(function() {
+			$('.examine').remove();
+		});
+	});
+
 	$(':submit[value=Submit]').click(function(e) {
 		var grade = $('input[type=radio][name=grade][value=0]').prop('checked')
 			 || $('input[type=radio][name=grade][value=1]').prop('checked');

@@ -182,3 +182,10 @@ input[type="radio"] .right_left_form {
 .shiftRight {
 	margin-left:075px;
 }
+
+.examine {
+	position: fixed;
+	height: 800px;
+	top: 01%;
+	left: 10%;
+}
