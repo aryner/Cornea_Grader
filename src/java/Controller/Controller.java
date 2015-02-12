@@ -24,7 +24,7 @@ import Utilities.*;
 @WebServlet(name="Controller", urlPatterns={
 					"/Controller","/register","/createUser","/home","/logout","/login","/upload_excel",
 					"/upload_picture_data","/insert_pictures","/upload_pictures","/img","/assign_right_left",
-					"/update_right_left","/grade","/submit_grade","/get_csv"
+					"/update_right_left","/grade","/submit_grade","/get_csv","/print_csv"
 			       })
 public class Controller extends HttpServlet {
 	// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,6 +71,11 @@ public class Controller extends HttpServlet {
 		}
 		else if(userPath.equals("/get_csv")) {
 			request.setAttribute("csvLines",Grade.get_CSV_lines());
+		}
+		else if(userPath.equals("/print_csv")) {
+			Grade.printGradeCSV();
+			response.sendRedirect("/Cornea_Grader/"); 
+			return;
 		}
 		else if (userPath.equals("/img")) {
 			String fileName = request.getParameter("fileName");

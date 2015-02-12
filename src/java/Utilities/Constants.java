@@ -13,6 +13,7 @@ package Utilities;
 public class Constants {
 	public static final String FILE_SEP = System.getProperty("file.separator");
 	public static final String PORT = System.getProperty("os.name").contains("Windows") ? "8084" : "8080";
+	public static final String HOME = System.getProperty("user.home");
 
 	public static final int UPLOAD_SIZE_THRESHOLD = 100 * 1024;
 	public static final int MAX_UPLOAD_SIZE = 4000000 * 1024;
@@ -20,6 +21,7 @@ public class Constants {
 	public static final String TEMP_DIR = ".."+FILE_SEP+"webapps"+FILE_SEP+"temp"+FILE_SEP;
 	public static final String PICTURE_DIR = ".."+FILE_SEP+"webapps"+FILE_SEP+"Cornea_Grader"+FILE_SEP+"pictures"+FILE_SEP;
 	public static final String PICTURE_PATH = "http://localhost:"+PORT+"/Cornea_Grader/img";
+	public static final String DESKTOP_PATH = HOME + FILE_SEP + "Desktop" + FILE_SEP;
 
 	public static final String NOT_EXCEL = "You can only upload excel files that have excel extensions";
 	public static final String NOT_PICTURE = "You can only upload files that have picture extensions (jpeg, jpg, png, gif)";

@@ -111,4 +111,66 @@ public class Tools {
 
 		return result;
 	}
+
+	public static String getCSVFileName() {
+		return Constants.DESKTOP_PATH + "grades"+getFormattedDate()+".csv";
+	}
+
+	public static String getFormattedDate() {
+		String result = "";
+		Date date = new Date(System.currentTimeMillis());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		if(day < 10) {
+			result += "0";
+		}
+		result += day;
+
+		int month = cal.get(Calendar.MONTH);
+
+		switch (month) {
+			case 0:
+				result += "jan";
+				break;
+			case 1:
+				result += "feb";
+				break;
+			case 2:
+				result += "mar";
+				break;
+			case 3:
+				result += "apr";
+				break;
+			case 4:
+				result += "may";
+				break;
+			case 5:
+				result += "jun";
+				break;
+			case 6:
+				result += "jul";
+				break;
+			case 7:
+				result += "aug";
+				break;
+			case 8:
+				result += "sep";
+				break;
+			case 9:
+				result += "oct";
+				break;
+			case 10:
+				result += "nov";
+				break;
+			case 11:
+				result += "dec";
+				break;
+		}
+
+		result += cal.get(Calendar.YEAR);
+
+		return result;
+	}
 }

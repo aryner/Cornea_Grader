@@ -8,6 +8,7 @@ package Model;
 
 import java.util.*;
 import Utilities.*;
+import java.io.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -134,6 +135,29 @@ public class Grade extends Model{
 		}
 
 		return lines;
+	}
+
+	public static void printGradeCSV() {
+		String fileName = Tools.getCSVFileName();
+		ArrayList<String> csvLines = get_CSV_lines();
+
+		try {
+			new File(Constants.DESKTOP_PATH + fileName).delete();
+			FileOutputStream fileOut = new FileOutputStream(fileName);
+			ArrayList<String> lines = get_CSV_lines();
+
+			for(String line : lines) {
+				fileOut.write((line+"\n").getBytes());
+			}
+
+			fileOut.close();
+		}
+		catch(FileNotFoundException e) {
+			e.printStackTrace(System.out);
+		}
+		catch(IOException e) {
+			e.printStackTrace(System.out);
+		}
 	}
 
 	/**
