@@ -49,11 +49,11 @@
 		<h3>Uploaded Images</h3>
 		<%
 		for(Picture pic: uploaded) {
-			out.print("<a href='assign_right_left?fileName="+pic.getName()+"'>"+pic.getName());
+			out.print((user.canUpload()?"<a href='assign_right_left?fileName="+pic.getName()+"'>":"")+pic.getName());
 			if(pic.getRight_left() == -1) {
 				out.print("***");
 			}
-			out.print("</a><br>");
+			out.print((user.canUpload()?"</a>":"")+"<br>");
 		}
 		%>
 	</div>
