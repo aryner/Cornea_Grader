@@ -28,10 +28,15 @@ public class Grade extends Model{
 	public static final int PLUS_ONE = 1;
 	public static final int HDR = 2;
 	public static final int DSLR = 3;
+
 	public static final int RIGHT = Picture.RIGHT;
 	public static final int LEFT = Picture.LEFT;
-	public static final int YES_CORNEAL_OPACITY = 1;
+
+	public static final int YES_CORNEAL_OPACITY = 3;
+	public static final int PROBABLY_CORNEAL_OPACITY = 2;
+	public static final int POSSIBLY_CORNEAL_OPACITY = 1;
 	public static final int NO_CORNEAL_OPACITY = 0;
+
 	public static final int POOR = 0;
 	public static final int ACCEPTABLE = 1;
 	public static final int GOOD = 2;

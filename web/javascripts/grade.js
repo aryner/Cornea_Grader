@@ -17,7 +17,9 @@ $(document).ready(function() {
 
 	$(':submit[value=Submit]').click(function(e) {
 		var grade = $('input[type=radio][name=grade][value=0]').prop('checked')
-			 || $('input[type=radio][name=grade][value=1]').prop('checked');
+			 || $('input[type=radio][name=grade][value=1]').prop('checked')
+			 || $('input[type=radio][name=grade][value=2]').prop('checked')
+			 || $('input[type=radio][name=grade][value=3]').prop('checked');
 
 		var quality = $('input[type=radio][name=quality][value=0]').prop('checked')
 			   || $('input[type=radio][name=quality][value=1]').prop('checked')
@@ -36,21 +38,27 @@ $(document).ready(function() {
 		console.log(unicode);
 		switch(unicode) {
 			case 97 : //a
+				$('input[type=radio][name=grade][value=3]').prop('checked',true);
+				break;
+			case 115 : //s
+				$('input[type=radio][name=grade][value=2]').prop('checked',true);
+				break;
+			case 100 : //d
 				$('input[type=radio][name=grade][value=1]').prop('checked',true);
 				break;
 			case 102 : //f
 				$('input[type=radio][name=grade][value=0]').prop('checked',true);
 				break;
-			case 106 : //j
+			case 119 : //w
 				$('input[type=radio][name=quality][value=2]').prop('checked',true);
 				break;
-			case 107 : //k
+			case 101 : //e
 				$('input[type=radio][name=quality][value=1]').prop('checked',true);
 				break;
-			case 108 : //l
+			case 114 : //r
 				$('input[type=radio][name=quality][value=0]').prop('checked',true);
 				break;
-			case 13 : //return/enter
+			case 98 : //b
 				$(':submit[value=Submit]').trigger('click');
 				break;
 		}

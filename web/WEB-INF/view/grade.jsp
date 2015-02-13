@@ -54,6 +54,8 @@
 		<h3>Corneal Opacity?</h3>
 		<p>
 		<input type="radio" value="<%out.print(Grade.YES_CORNEAL_OPACITY);%>" name="grade"> Yes
+		<input type="radio" value="<%out.print(Grade.PROBABLY_CORNEAL_OPACITY);%>" name="grade"> Probably
+		<input type="radio" value="<%out.print(Grade.POSSIBLY_CORNEAL_OPACITY);%>" name="grade"> Possibly
 		<input type="radio" value="<%out.print(Grade.NO_CORNEAL_OPACITY);%>" name="grade"> No
 		</p>
 	</div>

@@ -48,6 +48,7 @@ public class Picture extends Model{
 
 	public static final int RIGHT = 0;
 	public static final int LEFT = 1;
+	public static final int DONT_SHOW = 2;
 
 	public Picture( int id, String name, int patient_number, int uploaded, 
 			int dslr_cellscope, int hdr, int plus_one_exposure, int right_left) {
@@ -181,6 +182,8 @@ public class Picture extends Model{
 				assignSide(pictureName, LEFT);
 			else if(side.equals("right"))
 				assignSide(pictureName, RIGHT);
+			else if(side.equals("delete"))
+				assignSide(pictureName, DONT_SHOW);
 		}
 
 		return request.getParameter("nextFile");
@@ -207,7 +210,7 @@ public class Picture extends Model{
 
 		for(int i=0; i<uploaded.size() && neighbors.isEmpty(); i++) {
 			if(uploaded.get(i).getName().equals(fileName)) {
-				neighbors.addAll(Tools.getNeighbors(uploaded, i));
+				neighbors.addAll(Tools.getNeighbors(uploaded, i, Tools.NOT_CIRCULAR));
 			}
 		}
 

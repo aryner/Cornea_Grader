@@ -22,15 +22,15 @@ $(document).ready(function() {
 
 		switch(unicode) {
 			case 97 : //a
-				$('input[type=radio][value=left]').prop('checked',true);
 				break;
 			case 115 : //s
-				$('input[type=radio][value=delete]').prop('checked',true);
+				$('input[type=radio][value=left]').prop('checked',true);
 				break;
 			case 100 : //d
-				$('input[type=radio][value=right]').prop('checked',true);
+				$('input[type=radio][value=delete]').prop('checked',true);
 				break;
 			case 102 : //f
+				$('input[type=radio][value=right]').prop('checked',true);
 				break;
 			case 37 : //left arrow
 				e.preventDefault();

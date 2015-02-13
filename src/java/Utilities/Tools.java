@@ -13,6 +13,9 @@ import java.util.*;
  * @author aryner
  */
 public class Tools {
+	public static final int CIRCULAR = 0;
+	public static final int NOT_CIRCULAR = 1;
+
 	public static String getExtension(String fileName) {
 		return fileName.substring(fileName.lastIndexOf(".")+1, fileName.length());
 	}
@@ -90,7 +93,30 @@ public class Tools {
 		return numbers;
 	}
 
-	public static ArrayList getNeighbors(ArrayList arrayList, int index) {
+	public static ArrayList getNeighbors(ArrayList arrayList, int index, int type) {
+		return type == CIRCULAR ? getCircularNeighbors(arrayList, index) : getNeighbors(arrayList, index);
+	}
+
+	private static ArrayList getNeighbors(ArrayList arrayList, int index) {
+		ArrayList result = new ArrayList();
+
+		if(index>0) {
+			result.add(arrayList.get(index-1));
+		} else if(!arrayList.isEmpty()) {
+			result.add(arrayList.get(index));
+		}
+
+		if(index<arrayList.size()-1) {
+			result.add(arrayList.get(index+1));
+		}
+		else if(!arrayList.isEmpty()) {
+			result.add(arrayList.get(index));
+		}
+
+		return result;
+	}
+
+	private static ArrayList getCircularNeighbors(ArrayList arrayList, int index) {
 		ArrayList result = new ArrayList();
 
 		//add the element before or the last if this is the first

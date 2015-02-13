@@ -19,7 +19,7 @@
 %>
 
 <div id="content">
-	<h2>Right or Left?</h2>
+	<h2>Right or Left? Patient <%out.print(picture.getPatient_number());%></h2>
 
 	<div class="container">
 		<img src="<%out.print(Constants.PICTURE_PATH+"?fileName="+fileName);%>" class="img bgImg">
