@@ -199,4 +199,8 @@ public class Tools {
 
 		return result;
 	}
+
+	public static String escapePlus(String text) {
+		return text.replace("+","%2B");
+	}
 }

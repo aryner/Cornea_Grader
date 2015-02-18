@@ -74,7 +74,7 @@
 <div class="newDivLine"></div>
 <div class="pictureBox">
 <%for(Picture pic : pictures) { %>
-	<%String src = Constants.PICTURE_PATH+"?fileName="+pic.getName();%>
+	<%String src = Constants.PICTURE_PATH+"?fileName="+Tools.escapePlus(pic.getName());%>
 	<img src="<%out.print(src);%>" title="<%out.print(src);%>" class="gradeImg">
 <%}%>
 </div>

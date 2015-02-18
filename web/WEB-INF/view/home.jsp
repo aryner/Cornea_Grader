@@ -4,6 +4,7 @@
     Author     : aryner
 --%>
 <%@page import="Model.*"%>
+<%@page import="Utilities.*"%>
 <%@page import="java.util.*"%>
 
 <h2>Home</h2>
@@ -49,7 +50,7 @@
 		<h3>Uploaded Images</h3>
 		<%
 		for(Picture pic: uploaded) {
-			out.print((user.canUpload()?"<a href='assign_right_left?fileName="+pic.getName()+"'>":"")+pic.getName());
+			out.print((user.canUpload()?"<a href='assign_right_left?fileName="+Tools.escapePlus(pic.getName())+"'>":"")+pic.getName());
 			if(pic.getRight_left() == -1) {
 				out.print("***");
 			}

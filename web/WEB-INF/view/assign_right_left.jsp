@@ -5,6 +5,7 @@
 --%>
 
 <%@page import="Model.Picture"%>
+<%@page import="Utilities.*"%>
 <%@page import="Utilities.Constants"%>
 <%@page import="java.util.*"%>
 
@@ -13,8 +14,8 @@
 	String fileName = picture.getName();
 	ArrayList<Picture> neighbors = (ArrayList)request.getAttribute("neighbors");
 
-	String nextName = neighbors.isEmpty() ? fileName : neighbors.get(1).getName();
-	String previousName = neighbors.isEmpty() ? fileName : neighbors.get(0).getName();
+	String nextName = Tools.escapePlus(neighbors.isEmpty() ? fileName : neighbors.get(1).getName());
+	String previousName = Tools.escapePlus(neighbors.isEmpty() ? fileName : neighbors.get(0).getName());
 	int side = picture.getRight_left();
 %>
 
@@ -22,7 +23,7 @@
 	<h2>Right or Left? Patient <%out.print(picture.getPatient_number());%></h2>
 
 	<div class="container">
-		<img src="<%out.print(Constants.PICTURE_PATH+"?fileName="+fileName);%>" class="img bgImg">
+		<img src="<%out.print(Constants.PICTURE_PATH+"?fileName="+Tools.escapePlus(fileName));%>" class="img bgImg">
 	</div>
 
 	<form action="update_right_left" class="right_left_form" method="POST">
