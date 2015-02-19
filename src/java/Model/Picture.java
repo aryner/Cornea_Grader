@@ -186,7 +186,7 @@ public class Picture extends Model{
 				assignSide(pictureName, DONT_SHOW);
 		}
 
-		return request.getParameter("nextFile");
+		return Tools.escapePlus(request.getParameter("nextFile"));
 	}
 
 	private static void assignSide(String name, int side) {
