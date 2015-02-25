@@ -51,6 +51,9 @@ public class ExcelTools {
 
 		for(int i=rowStart; i<rowEnd; i++) {
 			Row row = sheet.getRow(i);
+			if(row == null) {
+				break;
+			}
 
 			Cell cell = row.getCell(indices[FILENAME_COL_INDEX]);
 			extractString(errors, fileNames, cell);
