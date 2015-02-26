@@ -82,7 +82,9 @@ public class Grade extends Model{
 		ArrayList<Picture> pictures = (ArrayList)SQLCommands.queryModel(query, Model.PICTURE);
 
 		if(pictures.isEmpty()) return -1;
-		return pictures.get(0).getPatient_number();
+
+		Random rand = new Random();
+		return pictures.get(rand.nextInt(pictures.size())).getPatient_number();
 	}
 
 	public static int getGradeType(User user, int patient_num) {
